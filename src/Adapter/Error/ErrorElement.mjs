@@ -1,4 +1,4 @@
-/** @typedef {import("./close.mjs").close} close_ */
+/** @typedef {import("./close.mjs").close} _close */
 /** @typedef {import("../../../../flux-css-api/src/Adapter/Api/CssApi.mjs").CssApi} CssApi */
 
 const __dirname = import.meta.url.substring(0, import.meta.url.lastIndexOf("/"));
@@ -13,7 +13,7 @@ export class ErrorElement extends HTMLElement {
      */
     #description;
     /**
-     * @type {close_}
+     * @type {_close}
      */
     #close;
     /**
@@ -34,7 +34,7 @@ export class ErrorElement extends HTMLElement {
      * @param {string} title
      * @param {string} description
      * @param {{[key: string]: string}} buttons
-     * @param {close_} close
+     * @param {_close} close
      * @returns {ErrorElement}
      */
     static new(css_api, title, description, buttons, close) {
@@ -52,7 +52,7 @@ export class ErrorElement extends HTMLElement {
      * @param {string} title
      * @param {string} description
      * @param {{[key: string]: string}} buttons
-     * @param {close_} close
+     * @param {_close} close
      * @private
      */
     constructor(css_api, title, description, buttons, close) {
@@ -121,6 +121,6 @@ export class ErrorElement extends HTMLElement {
     }
 }
 
-export const ERROR_TAG_NAME = "flux-error";
+export const ERROR_ELEMENT_TAG_NAME = "flux-error";
 
-customElements.define(ERROR_TAG_NAME, ErrorElement);
+customElements.define(ERROR_ELEMENT_TAG_NAME, ErrorElement);
