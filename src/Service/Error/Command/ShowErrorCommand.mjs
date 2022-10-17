@@ -1,5 +1,3 @@
-import { ErrorElement } from "../../../Adapter/Error/ErrorElement.mjs";
-
 /** @typedef {import("../../../../../flux-css-api/src/Adapter/Api/CssApi.mjs").CssApi} CssApi */
 
 export class ShowErrorCommand {
@@ -33,6 +31,8 @@ export class ShowErrorCommand {
      * @returns {Promise<string>}
      */
     async showError(title, description, buttons) {
+        const { ErrorElement } = await import("../../../Adapter/Error/ErrorElement.mjs");
+
         return new Promise(resolve => {
             const error_element = ErrorElement.new(
                 this.#css_api,
