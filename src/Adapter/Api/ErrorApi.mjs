@@ -1,6 +1,5 @@
-import { ErrorService } from "../../Service/Error/Port/ErrorService.mjs";
-
 /** @typedef {import("../../../../flux-css-api/src/Adapter/Api/CssApi.mjs").CssApi} CssApi */
+/** @typedef {import("../../Service/Error/Port/ErrorService.mjs").ErrorService} ErrorService */
 
 const __dirname = import.meta.url.substring(0, import.meta.url.lastIndexOf("/"));
 
@@ -36,7 +35,7 @@ export class ErrorApi {
      * @returns {Promise<void>}
      */
     async init() {
-        this.#error_service ??= this.#getErrorService();
+        this.#error_service ??= await this.#getErrorService();
 
         this.#css_api.importCssToRoot(
             document,
@@ -45,6 +44,9 @@ export class ErrorApi {
         this.#css_api.importCss(
             `${__dirname.substring(0, __dirname.lastIndexOf("/"))}/Error/ErrorElement.css`
         );
+
+        await import("../../Service/Error/Command/ShowErrorCommand.mjs");
+        await import("../Error/ErrorElement.mjs");
     }
 
     /**
@@ -62,10 +64,10 @@ export class ErrorApi {
     }
 
     /**
-     * @returns {ErrorService}
+     * @returns {Promise<ErrorService>}
      */
-    #getErrorService() {
-        return ErrorService.new(
+    async #getErrorService() {
+        return (await import("../../Service/Error/Port/ErrorService.mjs")).ErrorService.new(
             this.#css_api
         );
     }
