@@ -35,8 +35,6 @@ export class ErrorApi {
      * @returns {Promise<void>}
      */
     async init() {
-        this.#error_service ??= await this.#getErrorService();
-
         this.#css_api.importCssToRoot(
             document,
             `${__dirname}/../Error/ErrorVariables.css`
@@ -45,6 +43,7 @@ export class ErrorApi {
             `${__dirname.substring(0, __dirname.lastIndexOf("/"))}/Error/ErrorElement.css`
         );
 
+        await import("../../Service/Error/Port/ErrorService.mjs");
         await import("../../Service/Error/Command/ShowErrorCommand.mjs");
         await import("../Error/ErrorElement.mjs");
     }
@@ -56,7 +55,7 @@ export class ErrorApi {
      * @returns {Promise<string>}
      */
     async showError(title, description, buttons) {
-        return this.#error_service.showError(
+        return (await this.#getErrorService()).showError(
             title,
             description,
             buttons
@@ -67,8 +66,10 @@ export class ErrorApi {
      * @returns {Promise<ErrorService>}
      */
     async #getErrorService() {
-        return (await import("../../Service/Error/Port/ErrorService.mjs")).ErrorService.new(
+        this.#error_service ??= (await import("../../Service/Error/Port/ErrorService.mjs")).ErrorService.new(
             this.#css_api
         );
+
+        return this.#error_service;
     }
 }
