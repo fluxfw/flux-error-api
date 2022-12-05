@@ -111,6 +111,7 @@ export class ErrorElement extends HTMLElement {
         ] of Object.entries(this.#buttons)) {
             const button_element = document.createElement("button");
             button_element.innerText = label;
+            button_element.type = "button";
             button_element.addEventListener("click", () => {
                 this.#click(
                     id

@@ -46,7 +46,7 @@ export class ShowErrorCommand {
                 }
             );
 
-            document.body.appendChild(error_element);
+            document.body.prepend(error_element);
         });
     }
 }
